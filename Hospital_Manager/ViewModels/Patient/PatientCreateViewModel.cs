@@ -4,10 +4,10 @@ namespace Hospital_Manager.ViewModels.Patient
 {
     public class PatientCreateViewModel
     {
-        [Required(ErrorMessage ="")]
+        [Required(ErrorMessage = "Първото име е задължително.")]
         [StringLength(30, ErrorMessage = "Първото име не може да е повече от 30 букви.")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage ="")]
+        [Required(ErrorMessage = "Фамилното име е задължително.")]
         [StringLength(30, ErrorMessage = "Фамилното име не може да е повече от 30 букви.")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Имейлът е задължителен.")]
