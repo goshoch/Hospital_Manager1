@@ -110,5 +110,38 @@ namespace Hospital_Manager.Controllers
             await LoadDoctors(model.DoctorIds);
             return View(model);
         }
+        [HttpPost]
+        public async Task<IActionResult> Edit(ViewModels.Patient.PatientEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var patient = await context.Patients.Include(x => x.DoctorPatients).FirstOrDefaultAsync(p => p.Id == model.Id);
+                if (patient == null)
+                {
+                    return NotFound();
+                }
+                patient.FirstName = model.FirstName;
+                patient.LastName = model.LastName;
+                patient.Email = model.Email;
+                patient.PhoneNumber = model.PhoneNumber;
+                context.DoctorPatients.RemoveRange(patient.DoctorPatients);
+                if (model.DoctorIds != null && model.DoctorIds.Count > 0)
+                {
+                    foreach (var doctorId in model.DoctorIds)
+                    {
+                        var doctorPatient = new Data_Hospital_Manager.Entities.DoctorPatient
+                        {
+                            DoctorId = doctorId,
+                            PatientId = patient.Id
+                        };
+                        context.DoctorPatients.Add(doctorPatient);
+                    }
+                }
+                await context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            await LoadDoctors(model.DoctorIds);
+            return View(model);
+        }
     }
 }
