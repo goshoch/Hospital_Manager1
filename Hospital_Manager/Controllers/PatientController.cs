@@ -111,8 +111,12 @@ namespace Hospital_Manager.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(ViewModels.Patient.PatientEditViewModel model)
+        public async Task<IActionResult> Edit(int id,ViewModels.Patient.PatientEditViewModel model)
         {
+            if(id != model.Id)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 var patient = await context.Patients.Include(x => x.DoctorPatients).FirstOrDefaultAsync(p => p.Id == model.Id);
