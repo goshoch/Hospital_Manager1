@@ -25,7 +25,7 @@ namespace Hospital_Manager.Controllers
                 PhoneNumber = p.PhoneNumber,
                 DoctorName = string.Join(", ", p.DoctorPatients.Select(dp => dp.Doctor.FirstName + " " + dp.Doctor.LastName))
             }).ToList();
-            return View(patients);
+            return View(model);
         }
         public async Task<IActionResult> Details(int id)
         {
