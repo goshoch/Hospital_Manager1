@@ -1,4 +1,5 @@
 ﻿using Data_Hospital_Manager;
+using Hospital_Manager.ViewModels.Patient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,7 @@ namespace Hospital_Manager.Controllers
             return View();
         }
         [HttpPost]
+        [ActionName("Create")]
         public async Task<IActionResult> Create(ViewModels.Patient.PatientCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -111,6 +113,7 @@ namespace Hospital_Manager.Controllers
             return View(model);
         }
         [HttpPost]
+        [ActionName("Edit")]
         public async Task<IActionResult> Edit(int id,ViewModels.Patient.PatientEditViewModel model)
         {
             if(id != model.Id)
@@ -146,6 +149,30 @@ namespace Hospital_Manager.Controllers
             }
             await LoadDoctors(model.DoctorIds);
             return View(model);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var patient = await context.Patients.FindAsync(id);
+            if (patient == null) return NotFound();
+            var model = new PatientDeleteViewModel
+            {
+                Id = patient.Id,
+                FirstName = patient.FirstName,
+                LastName = patient.LastName,
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var patient = await context.Patients.FindAsync(id);
+            if (patient != null)
+            {
+                context.Patients.Remove(patient);
+                await context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
