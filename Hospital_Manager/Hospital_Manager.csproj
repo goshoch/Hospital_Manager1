@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Business\Hospital_Manager.Core.csproj" />
     <ProjectReference Include="..\Data_Hospital_Manager\Data_Hospital_Manager.csproj" />
   </ItemGroup>
 
