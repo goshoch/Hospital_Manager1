@@ -36,7 +36,7 @@ namespace Business.Services
 
         public async Task<List<Doctor>> GetAllDoctorsAsync()
         {
-            return await context_new.Doctors.Include(x=>x.DoctorPatients).ThenInclude(x=>x.Patient).ToListAsync();
+            return await context_new.Doctors.Include(x=>x.Hospital).Include(x=>x.DoctorPatients).ThenInclude(x=>x.Patient).ToListAsync();
         }
 
         public async Task<Doctor?> GetDoctorAsync(int id)
@@ -50,7 +50,8 @@ namespace Business.Services
         }
         public async Task<Doctor> GetDoctorDetailsAsync(int id)
         {
-             return await context_new.Doctors.Include(x => x.DoctorPatients)
+             return await context_new.Doctors.Include(d => d.Hospital)
+                .Include(x => x.DoctorPatients)
                 .ThenInclude(x => x.Patient)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }

@@ -24,7 +24,7 @@ namespace Data_Hospital_Manager.Configurations
                     BedsCount = 200,
                     CreatedOn = new DateTime(2026, 1, 1),
                     IsDeleted = false,
-                }
+                },
                 new Hospital
                 {
                     Id = 2,
@@ -36,4 +36,6 @@ namespace Data_Hospital_Manager.Configurations
                     CreatedOn = new DateTime(2026, 1, 1),
                     IsDeleted = false,
                 });
-} 
+        }
+    }
+    }
