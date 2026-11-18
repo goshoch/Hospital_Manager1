@@ -1,5 +1,4 @@
-﻿JS
-async function loadDoctors() {
+﻿async function loadDoctors() {
 
     // 1. Вземаме стойностите от полетата
 
@@ -116,3 +115,6 @@ document.getElementById("clearFilters")
         loadDoctors();
 
     });
+document.addEventListener("DOMContentLoaded", function () {
+    loadDoctors();
+});
