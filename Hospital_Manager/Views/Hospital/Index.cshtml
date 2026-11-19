@@ -4,7 +4,12 @@
 }
 
 <h1>Hospitals</h1>
-
+@if(TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <p>
     <a asp-action="Create">Create New Hospital</a> |

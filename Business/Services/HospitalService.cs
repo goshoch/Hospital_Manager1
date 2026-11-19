@@ -27,11 +27,19 @@ namespace Business.Services
         public async Task DeleteHospitalAsync(int id)
         {
             var hospital=await context_new.Hospitals.FindAsync(id);
-            if (hospital != null)
+            if(hospital==null)
             {
+                return;
+            }
+            bool hasDoctors = await context_new.Doctors.AnyAsync(d => d.HospitalId == id);
+
+            if (hasDoctors)
+            {
+                throw new InvalidOperationException("Cannot delete hospital with associated doctors.");
+            }
                 hospital.IsDeleted = true;
             await context_new.SaveChangesAsync();
-            }
+
         }
 
         public async Task<List<Hospital>> GetAllHospitalsAsync(string? search=null,int? minbeds=null,string? order=null)
